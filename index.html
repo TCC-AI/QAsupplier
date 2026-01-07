@@ -474,11 +474,11 @@
                 msgDiv.textContent = '';
                 msgDiv.style.color = 'var(--text-muted)';
                 try {
-                    // 模擬 API 呼叫
-                    await new Promise(r => setTimeout(r, 1000)); // Fake delay
-                    if (username === 'admin' && password === '1234') {
-                        localStorage.setItem('sms_token', 'fake-token-123');
-                        localStorage.setItem('sms_username', username);
+                    // 真實 API 呼叫
+                    const result = await this.apiCall('login', { username, password });
+                    if (result.status === 'success' && !result.data.error) {
+                        localStorage.setItem('sms_token', result.data.token);
+                        localStorage.setItem('sms_username', result.data.username);
                         msgDiv.textContent = '登入成功！正在跳轉...';
                         msgDiv.style.color = 'var(--secondary)';
                         setTimeout(() => {
@@ -491,7 +491,7 @@
                             msgDiv.textContent = '';
                         }, 500);
                     } else {
-                        throw new Error("帳號或密碼錯誤");
+                        throw new Error(result.data.error || result.message || "帳號或密碼錯誤");
                     }
                 } catch (error) {
                     msgDiv.textContent = error.message;
