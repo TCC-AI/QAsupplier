@@ -529,9 +529,27 @@
             loadDashboardData: async function () {
                 const tableBody = document.getElementById('supplierTableBody');
                 if (!tableBody) return;
-                const data = this.dummyData;
-                this.renderStats(data);
-                this.renderTable(data);
+                // 顯示 Loading
+                tableBody.innerHTML = '<tr><td colspan="6" style="text-align:center; color: var(--text-muted)">資料同步中...</td></tr>';
+                try {
+                    const result = await this.apiCall('getSuppliers');
+                    if (result.status === 'success') {
+                        const data = result.data;
+                        if (data.length === 0) {
+                            tableBody.innerHTML = '<tr><td colspan="6" style="text-align:center; color: var(--text-muted)">目前沒有供應商資料，請至 Google Sheet 新增。</td></tr>';
+                            // Reset stats
+                            this.renderStats([]);
+                        } else {
+                            this.renderStats(data);
+                            this.renderTable(data);
+                        }
+                    } else {
+                        throw new Error(result.message || "讀取資料失敗");
+                    }
+                } catch (e) {
+                    console.error(e);
+                    tableBody.innerHTML = `<tr><td colspan="6" style="text-align:center; color: var(--danger)">無法取得資料: ${e.message}</td></tr>`;
+                }
             },
             renderStats: function (data) {
                 document.getElementById('statTotal').textContent = data.length;
