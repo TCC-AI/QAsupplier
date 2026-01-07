@@ -479,16 +479,18 @@
                     if (result.status === 'success' && !result.data.error) {
                         localStorage.setItem('sms_token', result.data.token);
                         localStorage.setItem('sms_username', result.data.username);
+                        
                         msgDiv.textContent = '登入成功！正在跳轉...';
                         msgDiv.style.color = 'var(--secondary)';
+                        
                         setTimeout(() => {
-                            this.checkAuth(); // Refresh view state
-                            // Clear form
-                            document.getElementById('username').value = '';
-                            document.getElementById('password').value = '';
-                            btn.innerHTML = originalText;
-                            btn.disabled = false;
-                            msgDiv.textContent = '';
+                           this.checkAuth(); // Refresh view state
+                           // Clear form
+                           document.getElementById('username').value = '';
+                           document.getElementById('password').value = '';
+                           btn.innerHTML = originalText;
+                           btn.disabled = false;
+                           msgDiv.textContent = '';
                         }, 500);
                     } else {
                         throw new Error(result.data.error || result.message || "帳號或密碼錯誤");
@@ -506,34 +508,33 @@
                 this.checkAuth();
             },
             // --- Dashboard Logic ---
-            // --- Dashboard Logic ---
             renderDashboard: function () {
                 document.getElementById('statsGrid').style.display = 'grid';
                 document.querySelector('#supplierTableSection h3').textContent = '最近更新供應商';
                 document.getElementById('pageTitle').textContent = '總覽儀表板';
-                this.renderTable(this.dummyData);
+                this.loadDashboardData();
             },
             renderSupplierList: function () {
-                // For now, same as dashboard table but maybe specific filtering
                 document.getElementById('statsGrid').style.display = 'none';
                 document.querySelector('#supplierTableSection h3').textContent = '所有供應商列表';
                 document.getElementById('pageTitle').textContent = '供應商列表';
-                this.renderTable(this.dummyData);
+                this.loadDashboardData();
             },
-            loadDashboardData: async function () {
+            loadDashboardData: async function() {
                 const tableBody = document.getElementById('supplierTableBody');
                 if (!tableBody) return;
                 // 顯示 Loading
                 tableBody.innerHTML = '<tr><td colspan="6" style="text-align:center; color: var(--text-muted)">資料同步中...</td></tr>';
                 try {
                     const result = await this.apiCall('getSuppliers');
+                    
                     if (result.status === 'success') {
                         const data = result.data;
                         this.cachedData = data; // Cache for filtering
                         if (data.length === 0) {
                             tableBody.innerHTML = '<tr><td colspan="6" style="text-align:center; color: var(--text-muted)">目前沒有供應商資料，請至 Google Sheet 新增。</td></tr>';
                             // Reset stats
-                            this.renderStats([]);
+                            this.renderStats([]); 
                         } else {
                             this.renderStats(data);
                             this.renderTable(data);
@@ -556,6 +557,7 @@
             renderTable: function (data) {
                 const tbody = document.getElementById('supplierTableBody');
                 tbody.innerHTML = '';
+                
                 data.forEach(s => {
                     // 安全解析 certifications (可能是 JSON 字串或一般字串)
                     let certList = [];
@@ -599,6 +601,7 @@
                     tbody.appendChild(tr);
                 });
             },
+            
             getScoreColor: function (score) {
                 if (score >= 85) return '#34d399';
                 if (score >= 70) return '#fbbf24';
@@ -606,20 +609,37 @@
             },
             filterTable: function (query) {
                 const lower = query.toLowerCase();
-                // 使用 currentData 若有存，否則用 renderTable 的 data (需修改架構，暫時直接 filter 傳入的 data 會有問題因為 data 沒存)
-                // 修正：應該存一個 global data
-                if (!this.cachedData) return;
-                const filtered = this.cachedData.filter(s => s.name.toLowerCase().includes(lower));
-                this.renderTable(filtered);
+                 // 使用 currentData 若有存，否則用 renderTable 的 data (需修改架構，暫時直接 filter 傳入的 data 會有問題因為 data 沒存)
+                 // 修正：應該存一個 global data
+                 if (!this.cachedData) return; 
+                 
+                 const filtered = this.cachedData.filter(s => s.name.toLowerCase().includes(lower));
+                 this.renderTable(filtered);
             },
             refreshData: function () {
-                alert("正在從 Google Sheets 同步資料...");
+                this.loadDashboardData();
             },
             // --- Modal Logic ---
+            
             showDetail: function (id) {
-                const s = this.dummyData.find(item => item.id === id);
+                // 使用 cachedData 尋找, 且 id 轉字串比對
+                const s = (this.cachedData || []).find(item => String(item.id) === String(id));
                 if (!s) return;
+                
                 document.getElementById('modalTitle').textContent = s.name;
+                
+                // 解析 certifications
+                let certDisplay = [];
+                try { 
+                    certDisplay = JSON.parse(s.certifications || "[]");
+                    if (!Array.isArray(certDisplay)) certDisplay = [s.certifications];
+                } catch(e) { certDisplay = [s.certifications]; }
+                // 解析 qc_status
+                let qc = {};
+                try { qc = JSON.parse(s.qc_status || "{}"); } catch(e){}
+                
+                // Complaints count
+                const badCount = (Array.isArray(s.complaints)) ? s.complaints.length : (s.complaints || 0);
                 const modalBody = document.getElementById('modalBody');
                 modalBody.innerHTML = `
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
@@ -627,9 +647,8 @@
                             <h4 style="color: var(--text-muted); margin-bottom: 1rem;">基本資料</h4>
                             <p><strong>等級：</strong> <span class="badge badge-${s.level}">${s.level}</span></p>
                             <p><strong>總分：</strong> ${s.score}</p>
-                            <p><strong>認證：</strong> ${s.certs.join(', ') || '無'}</p>
-                            <p><strong>聯絡人：</strong> 陳先生 (範例)</p>
-                            <p><strong>電話：</strong> 02-1234-5678</p>
+                            <p><strong>認證：</strong> ${certDisplay.join(', ') || '無'}</p>
+                            <p><strong>前次更新：</strong> ${s.last_updated ? new Date(s.last_updated).toLocaleDateString() : 'N/A'}</p>
                         </div>
                         <div>
                             <h4 style="color: var(--text-muted); margin-bottom: 1rem;">評分細項</h4>
@@ -637,39 +656,40 @@
                             <div style="margin-bottom: 1rem;">
                                 <div style="display: flex; justify-content: space-between; font-size: 0.85rem;">
                                     <span>證照 (40%)</span>
-                                    <span>${Math.min(40, s.certs.length * 10)}/40</span>
                                 </div>
-                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: ${(Math.min(40, s.certs.length * 10) / 40) * 100}%"></div></div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: ${(Math.min(40, certDisplay.length * 10)/40)*100}%"></div></div>
                             </div>
                             
                             <div style="margin-bottom: 1rem;">
                                 <div style="display: flex; justify-content: space-between; font-size: 0.85rem;">
                                     <span>品保 (30%)</span>
-                                    <span>${s.score > 80 ? 30 : 20}/30</span>
                                 </div>
-                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: ${(s.score > 80 ? 30 : 20) / 30 * 100}%"></div></div>
+                                <small style="color:var(--text-muted)">
+                                    Lab: ${qc.has_lab ? '✅':'❌'} | QA: ${qc.has_qa_personnel ? '✅':'❌'} | Valid: ${qc.has_validation_system ? '✅':'❌'}
+                                </small>
                             </div>
                             <div style="margin-bottom: 1rem;">
                                 <div style="display: flex; justify-content: space-between; font-size: 0.85rem;">
-                                    <span>客訴扣分</span>
-                                    <span style="color: #f87171;">-${s.complaints * 5}</span>
+                                    <span>客訴 (每件-5)</span>
+                                    <span style="color: #f87171;">-${badCount * 5}</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                     
                     <div style="margin-top: 2rem;">
-                         <h4 style="color: var(--text-muted); margin-bottom: 1rem;">客訴紀錄 (Comlpaints)</h4>
-                         ${s.complaints > 0 ?
-                        `<div style="padding: 1rem; background: rgba(239, 68, 68, 0.1); border-radius: 8px; border: 1px solid rgba(239, 68, 68, 0.2);">
-                              ${s.complaints} 筆客訴紀錄 - 主要原因: 異物混入 (場內因素)
-                            </div>` :
-                        `<div style="padding: 1rem; background: rgba(255, 255, 255, 0.05); border-radius: 8px; text-align: center; color: var(--text-muted);">
+                         <h4 style="color: var(--text-muted); margin-bottom: 1rem;">客訴紀錄</h4>
+                         ${badCount > 0 ? 
+                           `<div style="padding: 1rem; background: rgba(239, 68, 68, 0.1); border-radius: 8px; border: 1px solid rgba(239, 68, 68, 0.2);">
+                              共有 ${badCount} 筆客訴紀錄
+                            </div>` : 
+                           `<div style="padding: 1rem; background: rgba(255, 255, 255, 0.05); border-radius: 8px; text-align: center; color: var(--text-muted);">
                               無客訴紀錄 🎉
                             </div>`
-                    }
+                         }
                     </div>
                 `;
+                
                 document.getElementById('detailModal').style.display = 'flex';
             },
             closeModal: function () {
