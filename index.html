@@ -1,3 +1,7 @@
+
+index.html
+
+
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -535,6 +539,7 @@
                     const result = await this.apiCall('getSuppliers');
                     if (result.status === 'success') {
                         const data = result.data;
+                        this.cachedData = data; // Cache for filtering
                         if (data.length === 0) {
                             tableBody.innerHTML = '<tr><td colspan="6" style="text-align:center; color: var(--text-muted)">目前沒有供應商資料，請至 Google Sheet 新增。</td></tr>';
                             // Reset stats
@@ -562,6 +567,25 @@
                 const tbody = document.getElementById('supplierTableBody');
                 tbody.innerHTML = '';
                 data.forEach(s => {
+                    // 安全解析 certifications (可能是 JSON 字串或一般字串)
+                    let certList = [];
+                    if (s.certifications) {
+                        try {
+                            certList = JSON.parse(s.certifications);
+                            if (!Array.isArray(certList)) certList = [s.certifications];
+                        } catch (e) {
+                            certList = [s.certifications];
+                        }
+                    } else if (Array.isArray(s.certs)) {
+                        certList = s.certs; // 相容舊格式
+                    }
+                    // 安全處理 complaints (可能是數字或尚未回傳)
+                    let complaintCount = 0;
+                    if (Array.isArray(s.complaints)) {
+                        complaintCount = s.complaints.length;
+                    } else if (typeof s.complaints === 'number') {
+                        complaintCount = s.complaints;
+                    }
                     const tr = document.createElement('tr');
                     tr.innerHTML = `
                         <td style="font-weight: 500;">${s.name}</td>
@@ -574,10 +598,10 @@
                                 </div>
                             </div>
                         </td>
-                        <td>${s.certs.join(', ') || '<span style="color:var(--text-muted)">無</span>'}</td>
-                        <td style="text-align: center;">${s.complaints > 0 ? `<span style="color:#ef4444">${s.complaints}</span>` : '<span style="color:var(--text-muted)">0</span>'}</td>
+                        <td>${certList.join(', ') || '<span style="color:var(--text-muted)">無</span>'}</td>
+                        <td style="text-align: center;">${complaintCount > 0 ? `<span style="color:#ef4444">${complaintCount}</span>` : '<span style="color:var(--text-muted)">0</span>'}</td>
                         <td>
-                            <button class="btn" style="padding: 0.25rem 0.5rem; font-size: 0.8rem; background: rgba(79, 70, 229, 0.2); color: #818cf8;" onclick="App.showDetail(${s.id})">
+                            <button class="btn" style="padding: 0.25rem 0.5rem; font-size: 0.8rem; background: rgba(79, 70, 229, 0.2); color: #818cf8;" onclick="App.showDetail('${s.id}')">
                                 詳情
                             </button>
                         </td>
@@ -592,7 +616,10 @@
             },
             filterTable: function (query) {
                 const lower = query.toLowerCase();
-                const filtered = this.dummyData.filter(s => s.name.toLowerCase().includes(lower));
+                // 使用 currentData 若有存，否則用 renderTable 的 data (需修改架構，暫時直接 filter 傳入的 data 會有問題因為 data 沒存)
+                // 修正：應該存一個 global data
+                if (!this.cachedData) return;
+                const filtered = this.cachedData.filter(s => s.name.toLowerCase().includes(lower));
                 this.renderTable(filtered);
             },
             refreshData: function () {
