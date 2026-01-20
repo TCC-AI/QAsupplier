@@ -18,49 +18,50 @@
 
         :root {
             /* 
-             * Theme: AOXA (Clean & Light)
+             * Theme: ELEGANT FINTECH (Mint & Forest)
              */
-            --bg-body: #f3f4f6;
-            /* Light Gray Body */
-            --bg-card: #ffffff;
-            /* Pure White Cards */
-            --bg-sidebar: #ffffff;
-            /* White Sidebar */
+            --bg-body: #ecfdf5;
+            /* Pale Sage/Mint Background */
+            --bg-card: rgba(255, 255, 255, 0.6);
+            /* Frosted Glass */
+            --bg-sidebar: rgba(255, 255, 255, 0.4);
 
-            /* Text - High Contrast */
-            --text-main: #111827;
-            /* Gray 900 */
-            --text-muted: #6b7280;
-            /* Gray 500 */
+            /* Text */
+            --text-main: #064e3b;
+            /* Deep Forest Green */
+            --text-muted: #374151;
+            /* Slate Gray */
             --text-light: #9ca3af;
-            /* Gray 400 */
 
-            /* Brand Colors - Trust & Professional */
-            --primary: #2563eb;
-            /* Royal Blue */
-            --primary-hover: #1d4ed8;
-            /* Darker Blue */
-            --secondary: #10b981;
+            /* Brand Colors */
+            --primary: #047857;
             /* Emerald */
-            --danger: #ef4444;
-            /* Red */
-            --warning: #f59e0b;
-            /* Amber */
+            --primary-hover: #065f46;
+            /* Deep Green */
+            --secondary: #059669;
+            /* Green */
+            --accent: #d97706;
+            /* Muted Gold */
+            --danger: #be123c;
+            /* Rose Red */
 
             /* Accents */
-            --accent-bg: #eff6ff;
-            /* Very light blue for active states */
-            --border-color: #e5e7eb;
-            /* Light gray border */
+            --accent-bg: #d1fae5;
+            /* Mint accent for active states */
+            --border-color: rgba(6, 78, 59, 0.1);
 
-            /* Shadows - Diffuse & Soft */
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-            --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+            /* Shadows - Soft & Organic */
+            --shadow-sm: 0 1px 2px 0 rgba(6, 78, 59, 0.05);
+            --shadow-card: 0 4px 20px -2px rgba(6, 78, 59, 0.05);
+            --shadow-hover: 0 10px 25px -5px rgba(6, 78, 59, 0.1);
+
+            /* Typography */
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Inter', sans-serif;
 
             /* Radius */
             --radius-md: 12px;
-            --radius-lg: 20px;
+            --radius-lg: 24px;
             --radius-pill: 9999px;
         }
 
@@ -68,7 +69,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            font-family: var(--font-body);
         }
 
         body {
@@ -76,81 +77,84 @@
             color: var(--text-main);
             min-height: 100vh;
             overflow-x: hidden;
-            font-size: 15px;
-            /* Slightly more compact modern feel */
-            line-height: 1.5;
+            font-size: 16px;
+            line-height: 1.6;
+            /* Subtle organic grain or gradient could be added here if desired */
+            background-image: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
         }
 
         /* --- Components --- */
 
-        /* Buttons - Solid & Clean */
+        /* Buttons - Elegant Pills */
         .btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 0.625rem 1.25rem;
-            border-radius: var(--radius-md);
-            /* Modern rounded square, not full pill */
+            padding: 0.75rem 2rem;
+            border-radius: var(--radius-pill);
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s ease;
-            border: 1px solid transparent;
-            font-size: 0.9rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: none;
+            font-size: 0.95rem;
             text-decoration: none;
-            gap: 0.5rem;
+            letter-spacing: 0.01em;
+            font-family: var(--font-body);
         }
 
         .btn-primary {
             background: var(--primary);
             color: white;
-            box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
+            box-shadow: 0 4px 12px rgba(4, 120, 87, 0.25);
         }
 
         .btn-primary:hover {
             background: var(--primary-hover);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(4, 120, 87, 0.35);
         }
 
-        /* Standard White Card (Replacing Glass) */
+        /* Frosted Card */
         .glass-panel {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-lg);
             box-shadow: var(--shadow-card);
-            /* Reset glass props */
-            backdrop-filter: none;
-            -webkit-backdrop-filter: none;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
         }
 
         /* Inputs */
         .form-group {
-            margin-bottom: 1.25rem;
+            margin-bottom: 1.5rem;
         }
 
         .form-label {
             display: block;
-            font-size: 0.875rem;
+            font-size: 0.9rem;
             font-weight: 500;
             color: var(--text-main);
             margin-bottom: 0.5rem;
+            font-family: var(--font-heading);
+            /* Serif for labels */
         }
 
         .form-input {
             width: 100%;
-            padding: 0.75rem 1rem;
-            background: #ffffff;
+            padding: 0.875rem 1.25rem;
+            background: rgba(255, 255, 255, 0.8);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-md);
             color: var(--text-main);
             transition: all 0.2s;
-            font-size: 0.95rem;
+            font-size: 1rem;
         }
 
         .form-input:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            box-shadow: 0 0 0 3px rgba(4, 120, 87, 0.1);
+            background: white;
         }
 
         .form-input::placeholder {
@@ -162,16 +166,17 @@
         h2,
         h3 {
             color: var(--text-main);
-            font-weight: 800;
-            /* Bolder headers */
-            letter-spacing: -0.02em;
+            font-family: var(--font-heading);
+            /* Serif Headings */
+            font-weight: 700;
+            letter-spacing: -0.01em;
         }
 
         .text-gradient {
-            /* No gradient in clean theme, just primary brand color */
-            background: none;
-            -webkit-text-fill-color: var(--primary);
-            color: var(--primary);
+            /* Muted gradient for elegance */
+            background: linear-gradient(135deg, var(--primary) 0%, #059669 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         /* --- Pages --- */
@@ -183,33 +188,34 @@
             align-items: center;
             justify-content: center;
             padding: 2rem;
-            background: white;
-            /* Clean white BG for login */
+            background: var(--bg-body);
             position: relative;
+            overflow: hidden;
         }
 
-        /* Decorative background blob for login */
+        /* Decorative circle */
         .login-container::before {
             content: '';
             position: absolute;
-            top: -10%;
-            right: -5%;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(37, 99, 235, 0.08) 0%, transparent 70%);
+            top: -20%;
+            right: -10%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(167, 243, 208, 0.4) 0%, transparent 60%);
+            border-radius: 50%;
             z-index: 0;
             pointer-events: none;
         }
 
         .login-card {
             width: 100%;
-            max-width: 400px;
-            padding: 3rem 2.5rem;
+            max-width: 440px;
+            padding: 3rem;
             position: relative;
             z-index: 1;
-            /* Extra shadow for login card */
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            border: 1px solid var(--border-color);
+            /* Higher glass effect */
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.8);
         }
 
         .login-header {
@@ -223,24 +229,28 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 64px;
-            height: 64px;
-            background: var(--accent-bg);
-            border-radius: 16px;
+            width: 72px;
+            height: 72px;
+            background: linear-gradient(135deg, #d1fae5, #ecfdf5);
+            border-radius: 50%;
+            /* Circle logo */
+            color: var(--primary);
+            box-shadow: 0 10px 15px -3px rgba(6, 78, 59, 0.1);
         }
 
         /* Dashboard Layout */
         .app-layout {
             display: none;
-            grid-template-columns: 250px 1fr;
+            grid-template-columns: 260px 1fr;
             min-height: 100vh;
         }
 
-        /* Sidebar - White & Clean */
+        /* Sidebar */
         .sidebar {
             background: var(--bg-sidebar);
             border-right: 1px solid var(--border-color);
-            padding: 2rem 1.25rem;
+            padding: 2rem 1.5rem;
+            backdrop-filter: blur(10px);
             display: flex;
             flex-direction: column;
         }
@@ -248,7 +258,7 @@
         .nav-item {
             display: flex;
             align-items: center;
-            padding: 0.75rem 1rem;
+            padding: 0.875rem 1.25rem;
             color: var(--text-muted);
             text-decoration: none;
             border-radius: var(--radius-md);
@@ -258,107 +268,119 @@
         }
 
         .nav-item:hover {
-            background: var(--bg-body);
-            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.5);
+            color: var(--primary);
         }
 
         .nav-item.active {
-            background: var(--accent-bg);
+            background: white;
             color: var(--primary);
-            font-weight: 600;
+            font-weight: 700;
+            box-shadow: 0 4px 6px -1px rgba(6, 78, 59, 0.05);
         }
 
         .main-content {
-            padding: 2.5rem;
+            padding: 3rem;
             overflow-y: auto;
-            max-width: 1400px;
+            max-width: 1600px;
             margin: 0 auto;
             width: 100%;
         }
 
-        /* Badges - Subtle Caps */
+        /* Badges */
         .badge {
-            padding: 0.2em 0.6em;
-            border-radius: 6px;
-            /* Soft square */
+            padding: 0.3em 0.8em;
+            border-radius: 9999px;
             font-size: 0.75rem;
             font-weight: 600;
             display: inline-block;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.02em;
         }
 
         .badge-A {
-            background: #dcfce7;
-            color: #166534;
+            background: #d1fae5;
+            color: #065f46;
         }
 
         .badge-B {
             background: #fef3c7;
-            color: #b45309;
+            color: #92400e;
         }
 
         .badge-C {
             background: #fee2e2;
-            color: #b91c1c;
+            color: #991b1b;
         }
 
-        /* Dashboard Grid - White Cards */
+        /* Dashboard Grid */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
         }
 
         .stat-card {
-            padding: 1.5rem;
+            padding: 2rem;
             display: flex;
             flex-direction: column;
             border-radius: var(--radius-lg);
-            background: white;
-            transition: transform 0.2s;
+            transition: transform 0.3s;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.4));
         }
 
-        /* Remove old theme-colors, use side borders or icons instead? 
-           Let's stick to clean white with an accent icon if possible, or just left-border */
-        .stat-card {
-            border-left: 4px solid transparent;
-            /* default */
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
         }
 
-        .stat-card:nth-child(1) {
-            border-left-color: var(--primary);
+        /* Subtle colored borders for stats */
+        .stat-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--border-color);
         }
 
-        .stat-card:nth-child(2) {
-            border-left-color: var(--secondary);
+        .stat-card:nth-child(1)::after {
+            background: var(--primary);
         }
 
-        .stat-card:nth-child(3) {
-            border-left-color: var(--danger);
+        .stat-card:nth-child(2)::after {
+            background: var(--secondary);
         }
 
-        .stat-card:nth-child(4) {
-            border-left-color: var(--warning);
+        .stat-card:nth-child(3)::after {
+            background: var(--danger);
+        }
+
+        .stat-card:nth-child(4)::after {
+            background: var(--accent);
         }
 
         .stat-title {
             color: var(--text-muted);
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             font-weight: 600;
             margin-bottom: 0.5rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+            font-family: var(--font-heading);
         }
 
         .stat-value {
-            font-size: 2.25rem;
-            font-weight: 800;
-            background: rgba(139, 92, 246, 0.15);
-            color: var(--primary);
-            /* Violet text */
+            font-size: 2.5rem;
             font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: -0.02em;
+            font-family: var(--font-heading);
+        }
+
+        /* Violet text */
+        font-weight: 700;
         }
 
         /* Tables */
@@ -399,9 +421,9 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(17, 24, 39, 0.6);
-            /* Dark dimming for light theme */
-            backdrop-filter: blur(4px);
+            background: rgba(6, 78, 59, 0.4);
+            /* Forest tint dimming */
+            backdrop-filter: blur(8px);
             display: none;
             align-items: center;
             justify-content: center;
@@ -414,29 +436,30 @@
             max-height: 90vh;
             overflow-y: auto;
             position: relative;
-            background: var(--bg-card);
-            /* White */
+            background: #ffffff;
             padding: 0;
-            /* Reset padding to be handled by inner */
             border-radius: var(--radius-lg);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            box-shadow: 0 25px 50px -12px rgba(6, 78, 59, 0.25);
+            border: 1px solid rgba(6, 78, 59, 0.1);
         }
 
         .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1.5rem 2rem;
+            padding: 1.5rem 2.5rem;
             border-bottom: 1px solid var(--border-color);
-            background: white;
+            background: rgba(255, 255, 255, 0.9);
             position: sticky;
             top: 0;
+            backdrop-filter: blur(4px);
         }
 
         .modal-header h2 {
             color: var(--text-main) !important;
-            font-size: 1.25rem;
+            font-size: 1.5rem;
             margin: 0;
+            font-family: var(--font-heading);
         }
 
         .close-btn {
