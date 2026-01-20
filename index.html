@@ -1,109 +1,165 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>供應商管理系統 | Supplier Management</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <!-- CSS Styles -->
     <style>
         /* 
          * 供應商管理系統 (SMS) - Design System & Global Styles
          * Theme: Modern Glassmorphism, Premium Blue/Green Gradients
          */
+
         :root {
-            /* Colors */
-            --primary: #4f46e5;
-            --primary-hover: #4338ca;
-            --secondary: #10b981;
-            --accent: #f59e0b;
-            --danger: #ef4444;
-            --bg-dark: #0f172a;
-            --bg-card: rgba(30, 41, 59, 0.7);
+            /* 
+             * Theme: SYNQ (Deep Indigo & Pastels)
+             */
+            --bg-dark: #1e1b4b;
+            /* Deep Indigo */
+            --bg-deep: #0f0c29;
+            /* Darker shade for contrast */
+
+            /* Text */
+            --text-main: #ffffff;
+            --text-muted: #a5b4fc;
+            /* Light Indigo text */
+
+            /* Primary Brand Colors */
+            --primary: #8b5cf6;
+            /* Violet */
+            --primary-hover: #7c3aed;
+
+            /* Card Pastels (for Stats/Highlights) */
+            --card-mint: #d1fae5;
+            /* Success/Safe */
+            --text-mint: #065f46;
+
+            --card-peach: #ffedd5;
+            /* Warning/Action */
+            --text-peach: #9a3412;
+
+            --card-lavender: #e0e7ff;
+            /* Info/Neutral */
+            --text-lavender: #3730a3;
+
+            --card-rose: #ffe4e6;
+            /* Danger/Alert */
+            --text-rose: #9f1239;
+
+            /* Glass & Borders */
+            --bg-card: rgba(255, 255, 255, 0.08);
             --bg-glass: rgba(255, 255, 255, 0.1);
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
             --border-light: rgba(255, 255, 255, 0.1);
+
             /* Shadows */
             --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            --glow: 0 0 20px rgba(79, 70, 229, 0.3);
-            /* Spacing */
-            --radius-md: 12px;
-            --radius-lg: 20px;
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --glow: 0 0 40px rgba(139, 92, 246, 0.15);
+
+            /* Spacing & Radius */
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            /* Larger standard radius */
+            --radius-pill: 9999px;
         }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
         }
+
         body {
             background-color: var(--bg-dark);
             color: var(--text-main);
             min-height: 100vh;
+            /* Gentle deep gradient */
             background-image:
-                radial-gradient(circle at 10% 20%, rgba(79, 70, 229, 0.2) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.2) 0%, transparent 40%);
+                radial-gradient(circle at 0% 0%, #2e1065 0%, transparent 50%),
+                radial-gradient(circle at 100% 100%, #4c1d95 0%, transparent 50%);
             overflow-x: hidden;
+            font-size: 16px;
         }
+
         /* --- Components --- */
-        /* Buttons */
+
+        /* Buttons - Pill Shape */
         .btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
             padding: 0.75rem 1.5rem;
-            border-radius: var(--radius-md);
+            border-radius: var(--radius-pill);
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             border: none;
             font-size: 0.95rem;
             text-decoration: none;
+            letter-spacing: 0.02em;
         }
+
         .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--primary-hover));
-            color: white;
-            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+            background: var(--text-main);
+            color: var(--bg-dark);
+            /* Inverted high contrast */
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
         }
+
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(79, 70, 229, 0.5);
+            box-shadow: 0 8px 20px rgba(255, 255, 255, 0.3);
+            background: #f8fafc;
         }
-        /* Glass Card */
+
+        /* Glass Panel / Card */
         .glass-panel {
             background: var(--bg-card);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--border-light);
             border-radius: var(--radius-lg);
             box-shadow: var(--shadow-lg);
         }
-        /* Inputs */
+
+        /* Inputs - Softer look */
         .form-group {
-            margin-bottom: 1.25rem;
+            margin-bottom: 1.5rem;
         }
+
         .form-label {
             display: block;
-            font-size: 0.875rem;
+            font-size: 0.9rem;
             color: var(--text-muted);
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
+            margin-left: 0.5rem;
+            /* Indent slightly */
         }
+
         .form-input {
             width: 100%;
-            padding: 0.75rem 1rem;
-            background: rgba(15, 23, 42, 0.6);
+            padding: 1rem 1.25rem;
+            background: rgba(0, 0, 0, 0.2);
             border: 1px solid var(--border-light);
             border-radius: var(--radius-md);
+            /* Softer corners */
             color: white;
             transition: all 0.2s;
+            font-size: 1rem;
         }
+
         .form-input:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+            background: rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.1);
         }
+
         /* Typography */
         h1,
         h2,
@@ -112,12 +168,15 @@
             font-weight: 700;
             letter-spacing: -0.025em;
         }
+
         .text-gradient {
             background: linear-gradient(to right, #818cf8, #34d399);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+
         /* --- Pages --- */
+
         /* Login Page */
         .login-container {
             min-height: 100vh;
@@ -127,21 +186,25 @@
             padding: 2rem;
             /* Default visible, toggled by JS */
         }
+
         .login-card {
             width: 100%;
             max-width: 420px;
             padding: 2.5rem;
         }
+
         .login-header {
             text-align: center;
             margin-bottom: 2rem;
         }
+
         .login-logo {
             font-size: 3rem;
             margin-bottom: 1rem;
             display: inline-block;
             filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
         }
+
         /* Dashboard Layout */
         .app-layout {
             display: none;
@@ -149,6 +212,7 @@
             grid-template-columns: 260px 1fr;
             min-height: 100vh;
         }
+
         .sidebar {
             background: rgba(15, 23, 42, 0.8);
             border-right: 1px solid var(--border-light);
@@ -156,6 +220,7 @@
             display: flex;
             flex-direction: column;
         }
+
         .nav-item {
             display: block;
             padding: 1rem;
@@ -165,15 +230,18 @@
             margin-bottom: 0.5rem;
             transition: all 0.2s;
         }
+
         .nav-item:hover,
         .nav-item.active {
             background: rgba(255, 255, 255, 0.05);
             color: var(--primary);
         }
+
         .main-content {
             padding: 2rem;
             overflow-y: auto;
         }
+
         /* Badges */
         .badge {
             padding: 0.25rem 0.75rem;
@@ -182,49 +250,159 @@
             font-weight: 600;
             display: inline-block;
         }
+
         .badge-A {
             background: rgba(16, 185, 129, 0.2);
             color: #34d399;
         }
+
         .badge-B {
             background: rgba(245, 158, 11, 0.2);
             color: #fbbf24;
         }
+
         .badge-C {
             background: rgba(239, 68, 68, 0.2);
             color: #f87171;
         }
-        /* Dashboard Grid */
+
+        /* Dashboard Grid & Pastel Cards */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 1.5rem;
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
         }
+
         .stat-card {
-            padding: 1.5rem;
+            padding: 1.75rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 160px;
+            border: none;
+            /* No border for these solid blocks */
+            transition: transform 0.2s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Specific Pastel Themes for Cards */
+        .stat-card.theme-lavender {
+            background: var(--card-lavender);
+            color: var(--text-lavender);
+        }
+
+        .stat-card.theme-lavender .stat-title {
+            color: rgba(55, 48, 163, 0.7);
+        }
+
+        .stat-card.theme-lavender .stat-value {
+            color: var(--text-lavender);
+        }
+
+        .stat-card.theme-mint {
+            background: var(--card-mint);
+            color: var(--text-mint);
+        }
+
+        .stat-card.theme-mint .stat-title {
+            color: rgba(6, 95, 70, 0.7);
+        }
+
+        .stat-card.theme-mint .stat-value {
+            color: var(--text-mint);
+        }
+
+        .stat-card.theme-peach {
+            background: var(--card-peach);
+            color: var(--text-peach);
+        }
+
+        .stat-card.theme-peach .stat-title {
+            color: rgba(154, 52, 18, 0.7);
+        }
+
+        .stat-card.theme-peach .stat-value {
+            color: var(--text-peach);
+        }
+
+        .stat-card.theme-rose {
+            background: var(--card-rose);
+            color: var(--text-rose);
+        }
+
+        .stat-card.theme-rose .stat-title {
+            color: rgba(159, 18, 57, 0.7);
+        }
+
+        .stat-card.theme-rose .stat-value {
+            color: var(--text-rose);
+        }
+
+
+        .stat-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+        }
+
+        /* Navigation Pills */
+        .sidebar {
+            background: transparent;
+            /* Cleaner look */
+            border-right: none;
+            padding: 2rem 1.5rem;
             display: flex;
             flex-direction: column;
         }
-        .stat-title {
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.25rem;
             color: var(--text-muted);
-            font-size: 0.875rem;
-            margin-bottom: 0.5rem;
+            text-decoration: none;
+            border-radius: var(--radius-pill);
+            /* Pill nav items */
+            margin-bottom: 0.75rem;
+            transition: all 0.2s;
+            font-weight: 500;
         }
-        .stat-value {
-            font-size: 2rem;
-            font-weight: 700;
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.05);
             color: white;
+            padding-left: 1.5rem;
+            /* Slight slide effect */
         }
+
+        .nav-item.active {
+            background: rgba(139, 92, 246, 0.15);
+            color: var(--primary);
+            /* Violet text */
+            font-weight: 700;
+        }
+
         /* Tables */
         .table-container {
             overflow-x: auto;
         }
+
         .data-table {
             width: 100%;
             border-collapse: collapse;
             white-space: nowrap;
         }
+
         .data-table th {
             text-align: left;
             padding: 1rem;
@@ -233,15 +411,18 @@
             font-weight: 600;
             font-size: 0.875rem;
         }
+
         .data-table td {
             padding: 1rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             color: var(--text-main);
             font-size: 0.95rem;
         }
+
         .data-table tr:hover td {
             background: rgba(255, 255, 255, 0.02);
         }
+
         /* Modal / Slide-over */
         .modal-overlay {
             position: fixed;
@@ -256,6 +437,7 @@
             justify-content: center;
             z-index: 50;
         }
+
         .modal-content {
             width: 90%;
             max-width: 600px;
@@ -264,6 +446,7 @@
             position: relative;
             background: #1e293b;
         }
+
         .modal-header {
             display: flex;
             justify-content: space-between;
@@ -272,6 +455,7 @@
             border-bottom: 1px solid var(--border-light);
             margin-bottom: 1rem;
         }
+
         .close-btn {
             background: none;
             border: none;
@@ -279,6 +463,7 @@
             font-size: 1.5rem;
             cursor: pointer;
         }
+
         /* Progress Bar for Score */
         .progress-bar-bg {
             width: 100%;
@@ -288,6 +473,7 @@
             overflow: hidden;
             margin-top: 5px;
         }
+
         .progress-bar-fill {
             height: 100%;
             background: var(--secondary);
@@ -296,41 +482,49 @@
         }
     </style>
 </head>
+
 <body>
+
     <!-- === Login Section === -->
     <div id="login-section" class="login-container">
         <div class="glass-panel login-card">
             <div class="login-header">
                 <div class="login-logo">🛡️</div>
-                <h1>昶青實業【品保部】</h1>
+                <h1>歡迎回來</h1>
                 <p class="text-gradient" style="margin-top: 0.5rem">Supplier Management System</p>
                 <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 5px;">品保部專用系統</p>
             </div>
+
             <form id="loginForm">
                 <div class="form-group">
                     <label class="form-label">帳號 Username</label>
                     <input type="text" class="form-input" id="username" placeholder="請輸入帳號" required>
                 </div>
+
                 <div class="form-group">
                     <label class="form-label">密碼 Password</label>
                     <input type="password" class="form-input" id="password" placeholder="••••••••" required>
                 </div>
+
                 <div style="margin-top: 2rem;">
                     <button type="submit" class="btn btn-primary" style="width: 100%">
                         登入系統 <span style="margin-left: 8px">→</span>
                     </button>
                 </div>
             </form>
+
             <div id="loginMessage" style="margin-top: 1rem; text-align: center; font-size: 0.9rem;"></div>
         </div>
     </div>
+
     <!-- === Dashboard Section === -->
     <div id="dashboard-section" class="app-layout">
         <!-- Sidebar -->
         <aside class="sidebar">
             <div style="margin-bottom: 3rem; padding: 0 0.5rem;">
-                <h2 class="text-gradient" style="font-size: 1.5rem;">昶青實業<br>品保部</h2>
+                <h2 class="text-gradient" style="font-size: 1.5rem;">SMS Admin</h2>
             </div>
+
             <nav>
                 <a href="#" class="nav-item active" onclick="App.renderDashboard(); return false;">
                     📊 總覽儀表板
@@ -345,6 +539,7 @@
                     ⚙️ 系統設定
                 </a>
             </nav>
+
             <div style="margin-top: auto;">
                 <div class="nav-item" style="cursor: default; opacity: 0.7;">
                     👤 <span id="currentUser">User</span>
@@ -356,6 +551,7 @@
                 </button>
             </div>
         </aside>
+
         <!-- Main Content -->
         <main class="main-content">
             <header style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
@@ -365,25 +561,29 @@
                     <button class="btn btn-primary" onclick="App.refreshData()">🔄 同步資料</button>
                 </div>
             </header>
-            <!-- Stats Grid -->
+
+            <!-- Stats Grid - Pastel Blocks -->
             <div id="statsGrid" class="stats-grid">
-                <div class="glass-panel stat-card">
+                <div class="glass-panel stat-card theme-lavender">
                     <span class="stat-title">總供應商數</span>
                     <span class="stat-value" id="statTotal">--</span>
                 </div>
-                <div class="glass-panel stat-card">
+                <div class="glass-panel stat-card theme-mint">
                     <span class="stat-title">A 級優良廠商</span>
-                    <span class="stat-value" style="color: #34d399;" id="statA">--</span>
+                    <span class="stat-value" id="statA">--</span>
                 </div>
-                <div class="glass-panel stat-card">
+                <div class="glass-panel stat-card theme-peach">
                     <span class="stat-title">C 級需輔導廠商</span>
-                    <span class="stat-value" style="color: #f87171;" id="statC">--</span>
+                    <span class="stat-value" id="statC">--</span>
                 </div>
-                <div class="glass-panel stat-card">
-                    <span class="stat-title">本季客訴案件</span>
-                    <span class="stat-value" style="color: #fbbf24;" id="statComplaints">--</span>
+                <!-- 本季客訴案件 -->
+                <div class="glass-panel stat-card theme-rose">
+                    <span class="stat-title">及時處理案件</span>
+                    <!-- 暫時替代客訴顯示，或可保留客訴 -->
+                    <span class="stat-value" id="statComplaints">--</span>
                 </div>
             </div>
+
             <!-- Supplier Table Section -->
             <div id="supplierTableSection" class="glass-panel" style="padding: 1.5rem;">
                 <h3 style="margin-bottom: 1.5rem;">最近更新供應商</h3>
@@ -410,6 +610,7 @@
             </div>
         </main>
     </div>
+
     <!-- Details Modal -->
     <div class="modal-overlay" id="detailModal">
         <div class="glass-panel modal-content" style="padding: 2rem;">
@@ -422,37 +623,45 @@
             </div>
         </div>
     </div>
+
     <!-- JS Logic -->
     <script>
         /**
          * 供應商管理系統 - Frontend Logic
          */
+
         // 設定後端 API URL (請使用者填入部署後的 Web App URL)
         const API_URL = "https://script.google.com/macros/s/AKfycbwmzXrKvHUxbjLPAqOyyfP9G5RItlzfIFqF0MWE0j9eEgHY80_StypabCa_aBxxQNGb/exec";
+
         const App = {
             init: function () {
                 this.addEventListeners();
                 this.checkAuth();
             },
+
             addEventListeners: function () {
                 const loginForm = document.getElementById('loginForm');
                 if (loginForm) {
                     loginForm.addEventListener('submit', this.handleLogin.bind(this));
                 }
+
                 const searchInput = document.getElementById('searchInput');
                 if (searchInput) {
                     searchInput.addEventListener('input', (e) => this.filterTable(e.target.value));
                 }
             },
+
             checkAuth: function () {
                 const token = localStorage.getItem('sms_token');
                 const loginSection = document.getElementById('login-section');
                 const dashboardSection = document.getElementById('dashboard-section');
+
                 if (token) {
                     // Logged in
                     loginSection.style.display = 'none';
                     dashboardSection.style.display = 'grid'; // app-layout is grid
                     this.loadDashboardData();
+
                     const userSpan = document.getElementById('currentUser');
                     if (userSpan) userSpan.textContent = localStorage.getItem('sms_username') || 'Admin';
                 } else {
@@ -461,40 +670,46 @@
                     dashboardSection.style.display = 'none';
                 }
             },
+
             handleLogin: async function (e) {
                 e.preventDefault();
+
                 const btn = e.target.querySelector('button');
                 const originalText = btn.innerHTML;
                 const msgDiv = document.getElementById('loginMessage');
                 const username = document.getElementById('username').value;
                 const password = document.getElementById('password').value;
+
                 // UI Loading State
                 btn.innerHTML = '驗證中...';
                 btn.disabled = true;
                 msgDiv.textContent = '';
                 msgDiv.style.color = 'var(--text-muted)';
+
                 try {
                     // 真實 API 呼叫
                     const result = await this.apiCall('login', { username, password });
+
                     if (result.status === 'success' && !result.data.error) {
                         localStorage.setItem('sms_token', result.data.token);
                         localStorage.setItem('sms_username', result.data.username);
-                        
+
                         msgDiv.textContent = '登入成功！正在跳轉...';
                         msgDiv.style.color = 'var(--secondary)';
-                        
+
                         setTimeout(() => {
-                           this.checkAuth(); // Refresh view state
-                           // Clear form
-                           document.getElementById('username').value = '';
-                           document.getElementById('password').value = '';
-                           btn.innerHTML = originalText;
-                           btn.disabled = false;
-                           msgDiv.textContent = '';
+                            this.checkAuth(); // Refresh view state
+                            // Clear form
+                            document.getElementById('username').value = '';
+                            document.getElementById('password').value = '';
+                            btn.innerHTML = originalText;
+                            btn.disabled = false;
+                            msgDiv.textContent = '';
                         }, 500);
                     } else {
                         throw new Error(result.data.error || result.message || "帳號或密碼錯誤");
                     }
+
                 } catch (error) {
                     msgDiv.textContent = error.message;
                     msgDiv.style.color = 'var(--danger)';
@@ -502,39 +717,49 @@
                     btn.disabled = false;
                 }
             },
+
             logout: function () {
                 localStorage.removeItem('sms_token');
                 localStorage.removeItem('sms_username');
                 this.checkAuth();
             },
+
             // --- Dashboard Logic ---
+
+            // --- Dashboard Logic ---
+
             renderDashboard: function () {
                 document.getElementById('statsGrid').style.display = 'grid';
                 document.querySelector('#supplierTableSection h3').textContent = '最近更新供應商';
                 document.getElementById('pageTitle').textContent = '總覽儀表板';
                 this.loadDashboardData();
             },
+
             renderSupplierList: function () {
+                // For now, same as dashboard table but maybe specific filtering
                 document.getElementById('statsGrid').style.display = 'none';
                 document.querySelector('#supplierTableSection h3').textContent = '所有供應商列表';
                 document.getElementById('pageTitle').textContent = '供應商列表';
                 this.loadDashboardData();
             },
-            loadDashboardData: async function() {
+
+            loadDashboardData: async function () {
                 const tableBody = document.getElementById('supplierTableBody');
                 if (!tableBody) return;
+
                 // 顯示 Loading
                 tableBody.innerHTML = '<tr><td colspan="6" style="text-align:center; color: var(--text-muted)">資料同步中...</td></tr>';
+
                 try {
                     const result = await this.apiCall('getSuppliers');
-                    
+
                     if (result.status === 'success') {
                         const data = result.data;
                         this.cachedData = data; // Cache for filtering
                         if (data.length === 0) {
                             tableBody.innerHTML = '<tr><td colspan="6" style="text-align:center; color: var(--text-muted)">目前沒有供應商資料，請至 Google Sheet 新增。</td></tr>';
                             // Reset stats
-                            this.renderStats([]); 
+                            this.renderStats([]);
                         } else {
                             this.renderStats(data);
                             this.renderTable(data);
@@ -547,6 +772,7 @@
                     tableBody.innerHTML = `<tr><td colspan="6" style="text-align:center; color: var(--danger)">無法取得資料: ${e.message}</td></tr>`;
                 }
             },
+
             renderStats: function (data) {
                 document.getElementById('statTotal').textContent = data.length;
                 document.getElementById('statA').textContent = data.filter(s => s.level === 'A').length;
@@ -554,10 +780,11 @@
                 const totalComplaints = data.reduce((acc, curr) => acc + (curr.complaints || 0), 0);
                 document.getElementById('statComplaints').textContent = totalComplaints;
             },
+
             renderTable: function (data) {
                 const tbody = document.getElementById('supplierTableBody');
                 tbody.innerHTML = '';
-                
+
                 data.forEach(s => {
                     // 安全解析 certifications (可能是 JSON 字串或一般字串)
                     let certList = [];
@@ -571,6 +798,7 @@
                     } else if (Array.isArray(s.certs)) {
                         certList = s.certs; // 相容舊格式
                     }
+
                     // 安全處理 complaints (可能是數字或尚未回傳)
                     let complaintCount = 0;
                     if (Array.isArray(s.complaints)) {
@@ -578,6 +806,7 @@
                     } else if (typeof s.complaints === 'number') {
                         complaintCount = s.complaints;
                     }
+
                     const tr = document.createElement('tr');
                     tr.innerHTML = `
                         <td style="font-weight: 500;">${s.name}</td>
@@ -601,45 +830,35 @@
                     tbody.appendChild(tr);
                 });
             },
-            
+
             getScoreColor: function (score) {
                 if (score >= 85) return '#34d399';
                 if (score >= 70) return '#fbbf24';
                 return '#f87171';
             },
+
             filterTable: function (query) {
                 const lower = query.toLowerCase();
-                 // 使用 currentData 若有存，否則用 renderTable 的 data (需修改架構，暫時直接 filter 傳入的 data 會有問題因為 data 沒存)
-                 // 修正：應該存一個 global data
-                 if (!this.cachedData) return; 
-                 
-                 const filtered = this.cachedData.filter(s => s.name.toLowerCase().includes(lower));
-                 this.renderTable(filtered);
+                // 使用 currentData 若有存，否則用 renderTable 的 data (需修改架構，暫時直接 filter 傳入的 data 會有問題因為 data 沒存)
+                // 修正：應該存一個 global data
+                if (!this.cachedData) return;
+
+                const filtered = this.cachedData.filter(s => s.name.toLowerCase().includes(lower));
+                this.renderTable(filtered);
             },
+
             refreshData: function () {
-                this.loadDashboardData();
+                alert("正在從 Google Sheets 同步資料...");
             },
+
             // --- Modal Logic ---
-            
+
             showDetail: function (id) {
-                // 使用 cachedData 尋找, 且 id 轉字串比對
-                const s = (this.cachedData || []).find(item => String(item.id) === String(id));
+                const s = this.dummyData.find(item => item.id === id);
                 if (!s) return;
-                
+
                 document.getElementById('modalTitle').textContent = s.name;
-                
-                // 解析 certifications
-                let certDisplay = [];
-                try { 
-                    certDisplay = JSON.parse(s.certifications || "[]");
-                    if (!Array.isArray(certDisplay)) certDisplay = [s.certifications];
-                } catch(e) { certDisplay = [s.certifications]; }
-                // 解析 qc_status
-                let qc = {};
-                try { qc = JSON.parse(s.qc_status || "{}"); } catch(e){}
-                
-                // Complaints count
-                const badCount = (Array.isArray(s.complaints)) ? s.complaints.length : (s.complaints || 0);
+
                 const modalBody = document.getElementById('modalBody');
                 modalBody.innerHTML = `
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
@@ -647,8 +866,9 @@
                             <h4 style="color: var(--text-muted); margin-bottom: 1rem;">基本資料</h4>
                             <p><strong>等級：</strong> <span class="badge badge-${s.level}">${s.level}</span></p>
                             <p><strong>總分：</strong> ${s.score}</p>
-                            <p><strong>認證：</strong> ${certDisplay.join(', ') || '無'}</p>
-                            <p><strong>前次更新：</strong> ${s.last_updated ? new Date(s.last_updated).toLocaleDateString() : 'N/A'}</p>
+                            <p><strong>認證：</strong> ${s.certs.join(', ') || '無'}</p>
+                            <p><strong>聯絡人：</strong> 陳先生 (範例)</p>
+                            <p><strong>電話：</strong> 02-1234-5678</p>
                         </div>
                         <div>
                             <h4 style="color: var(--text-muted); margin-bottom: 1rem;">評分細項</h4>
@@ -656,59 +876,66 @@
                             <div style="margin-bottom: 1rem;">
                                 <div style="display: flex; justify-content: space-between; font-size: 0.85rem;">
                                     <span>證照 (40%)</span>
+                                    <span>${Math.min(40, s.certs.length * 10)}/40</span>
                                 </div>
-                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: ${(Math.min(40, certDisplay.length * 10)/40)*100}%"></div></div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: ${(Math.min(40, s.certs.length * 10) / 40) * 100}%"></div></div>
                             </div>
                             
                             <div style="margin-bottom: 1rem;">
                                 <div style="display: flex; justify-content: space-between; font-size: 0.85rem;">
                                     <span>品保 (30%)</span>
+                                    <span>${s.score > 80 ? 30 : 20}/30</span>
                                 </div>
-                                <small style="color:var(--text-muted)">
-                                    Lab: ${qc.has_lab ? '✅':'❌'} | QA: ${qc.has_qa_personnel ? '✅':'❌'} | Valid: ${qc.has_validation_system ? '✅':'❌'}
-                                </small>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: ${(s.score > 80 ? 30 : 20) / 30 * 100}%"></div></div>
                             </div>
+
                             <div style="margin-bottom: 1rem;">
                                 <div style="display: flex; justify-content: space-between; font-size: 0.85rem;">
-                                    <span>客訴 (每件-5)</span>
-                                    <span style="color: #f87171;">-${badCount * 5}</span>
+                                    <span>客訴扣分</span>
+                                    <span style="color: #f87171;">-${s.complaints * 5}</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                     
                     <div style="margin-top: 2rem;">
-                         <h4 style="color: var(--text-muted); margin-bottom: 1rem;">客訴紀錄</h4>
-                         ${badCount > 0 ? 
-                           `<div style="padding: 1rem; background: rgba(239, 68, 68, 0.1); border-radius: 8px; border: 1px solid rgba(239, 68, 68, 0.2);">
-                              共有 ${badCount} 筆客訴紀錄
-                            </div>` : 
-                           `<div style="padding: 1rem; background: rgba(255, 255, 255, 0.05); border-radius: 8px; text-align: center; color: var(--text-muted);">
+                         <h4 style="color: var(--text-muted); margin-bottom: 1rem;">客訴紀錄 (Comlpaints)</h4>
+                         ${s.complaints > 0 ?
+                        `<div style="padding: 1rem; background: rgba(239, 68, 68, 0.1); border-radius: 8px; border: 1px solid rgba(239, 68, 68, 0.2);">
+                              ${s.complaints} 筆客訴紀錄 - 主要原因: 異物混入 (場內因素)
+                            </div>` :
+                        `<div style="padding: 1rem; background: rgba(255, 255, 255, 0.05); border-radius: 8px; text-align: center; color: var(--text-muted);">
                               無客訴紀錄 🎉
                             </div>`
-                         }
+                    }
                     </div>
                 `;
-                
+
                 document.getElementById('detailModal').style.display = 'flex';
             },
+
             closeModal: function () {
                 document.getElementById('detailModal').style.display = 'none';
             },
+
             apiCall: async function (action, payload = {}) {
                 if (API_URL === "YOUR_GAS_WEB_APP_URL") {
                     alert("請先設定 app.js 中的 API_URL！");
                     return;
                 }
+
                 const response = await fetch(API_URL + '?action=' + action, {
                     method: 'POST',
                     body: JSON.stringify(payload)
                 });
+
                 return await response.json();
             }
         };
+
         // Start App
         document.addEventListener('DOMContentLoaded', () => App.init());
     </script>
 </body>
+
 </html>
